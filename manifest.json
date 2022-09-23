@@ -1,0 +1,258 @@
+{
+    "name": "MyAwesomeFlogoService",
+    "description": "This integrates everything with everything",
+    "version": "1.0.0",
+    "type": "flogo",
+    "resources": {
+        "physicalMemory": 1024,
+        "totalMemory": 4096,
+        "cpuQuota": 25
+    },
+    "endpoints": [
+        {
+            "name": "AppHealthCheck",
+            "pingable": true,
+            "protocol": "http",
+            "port": "7777",
+            "type": "private",
+            "ping": "/ping"
+        },
+        {
+            "protocol": "http",
+            "port": "9999",
+            "spec": {
+                "name": "PetStoreExample",
+                "version": "1.0.0"
+            },
+            "title": "ReceiveHTTPMessage",
+            "swagger": {
+                "swagger": "2.0",
+                "info": {
+                    "title": "PetStoreExample",
+                    "version": "1.0.0",
+                    "description": "Simple REST Trigger"
+                },
+                "paths": {
+                    "/pet/{petId}": {
+                        "post": {
+                            "summary": "postpet_POST",
+                            "operationId": "post_pet_petId",
+                            "parameters": [
+                                {
+                                    "name": "petId",
+                                    "in": "path",
+                                    "description": "Request parameter",
+                                    "required": true,
+                                    "type": "string"
+                                },
+                                {
+                                    "name": "body",
+                                    "in": "body",
+                                    "description": "request body parameter",
+                                    "required": true,
+                                    "schema": {
+                                        "$ref": "#/definitions/schema1"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "",
+                                    "schema": {
+                                        "$ref": "#/definitions/schema1"
+                                    }
+                                }
+                            },
+                            "consumes": [
+                                "application/json"
+                            ]
+                        },
+                        "get": {
+                            "summary": "getpet_GET",
+                            "operationId": "get_pet_petId",
+                            "parameters": [
+                                {
+                                    "name": "petId",
+                                    "in": "path",
+                                    "description": "Request parameter",
+                                    "required": true,
+                                    "type": "string"
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "",
+                                    "schema": {
+                                        "$ref": "#/definitions/schema1"
+                                    }
+                                }
+                            }
+                        },
+                        "put": {
+                            "summary": "putpet_PUT",
+                            "operationId": "put_pet_petId",
+                            "parameters": [
+                                {
+                                    "name": "petId",
+                                    "in": "path",
+                                    "description": "Request parameter",
+                                    "required": true,
+                                    "type": "string"
+                                },
+                                {
+                                    "name": "body",
+                                    "in": "body",
+                                    "description": "request body parameter",
+                                    "required": true,
+                                    "schema": {
+                                        "$ref": "#/definitions/schema1"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "",
+                                    "schema": {
+                                        "$ref": "#/definitions/schema1"
+                                    }
+                                }
+                            },
+                            "consumes": [
+                                "application/json"
+                            ]
+                        },
+                        "patch": {
+                            "summary": "patchpet_PATCH",
+                            "operationId": "patch_pet_petId",
+                            "parameters": [
+                                {
+                                    "name": "petId",
+                                    "in": "path",
+                                    "description": "Request parameter",
+                                    "required": true,
+                                    "type": "string"
+                                },
+                                {
+                                    "name": "body",
+                                    "in": "body",
+                                    "description": "request body parameter",
+                                    "required": true,
+                                    "schema": {
+                                        "$ref": "#/definitions/schema1"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "",
+                                    "schema": {
+                                        "$ref": "#/definitions/schema1"
+                                    }
+                                }
+                            },
+                            "consumes": [
+                                "application/json"
+                            ]
+                        },
+                        "delete": {
+                            "summary": "deletepet_DELETE",
+                            "operationId": "delete_pet_petId",
+                            "parameters": [
+                                {
+                                    "name": "petId",
+                                    "in": "path",
+                                    "description": "Request parameter",
+                                    "required": true,
+                                    "type": "string"
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "",
+                                    "schema": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "definitions": {
+                    "schema1": {
+                        "type": "object",
+                        "required": [
+                            "photoUrls",
+                            "name",
+                            "id",
+                            "category",
+                            "status",
+                            "tags"
+                        ],
+                        "properties": {
+                            "photoUrls": {
+                                "type": "object",
+                                "required": [
+                                    "photoUrl"
+                                ],
+                                "properties": {
+                                    "photoUrl": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "category": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "object",
+                                "properties": {
+                                    "tag": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": [
+                                                "name",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "propertyPrefix": "TCI_FLOGO_USER_",
+    "properties": []
+}

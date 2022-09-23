@@ -1,0 +1,846 @@
+{
+    "imports": [
+        "github.com/project-flogo/flow",
+        "git.tibco.com/git/product/ipaas/wi-contrib.git/contributions/General/activity/httpresponse",
+        "github.com/project-flogo/contrib/activity/actreturn",
+        "git.tibco.com/git/product/ipaas/wi-contrib.git/contributions/General/trigger/rest",
+        "github.com/project-flogo/contrib/function/array"
+    ],
+    "name": "MyAwesomeFlogoService",
+    "description": "This integrates everything with everything",
+    "version": "1.0.0",
+    "type": "flogo:app",
+    "appModel": "1.1.1",
+    "tags": [],
+    "triggers": [
+        {
+            "ref": "#rest",
+            "name": "tibco-wi-rest",
+            "description": "Simple REST Trigger",
+            "settings": {
+                "port": 9999,
+                "APISpecUpdate": true,
+                "swagger": {
+                    "filename": "TIBCO Cloud Integration PetStore Sample.json",
+                    "content": "data:application/json;base64,eyJzd2FnZ2VyIjoiMi4wIiwiaW5mbyI6eyJ2ZXJzaW9uIjoiMS4xIiwidGl0bGUiOiJUSUJDTyBDbG91ZCBJbnRlZ3JhdGlvbiBQZXRTdG9yZSBTYW1wbGUiLCJkZXNjcmlwdGlvbiI6IlRvIGdldCB5b3Ugc3RhcnRlZCB3aXRoIHRoZSBBUEkgTW9kZWxpbmcgYW5kIE1vY2sgY2FwYWJpbGl0aWVzIG9mIFRJQkNPIENsb3VkIEludGVncmF0aW9uIHdlJ3ZlIGNyZWF0ZWQgYSBzYW1wbGUgQVBJIFNwZWNpZmljYXRpb24gZm9yIHlvdS4gVGhpcyBzYW1wbGUgc2hvd3MgYW4gQVBJIFNwZWNpZmljYXRpb24gZm9yIGEgUGV0U3RvcmUgQVBJIHRoYXQgY2FuIEdFVCAocmV0cmlldmUpLCBQT1NUIChjcmVhdGUpLCBQVVQgKGNyZWF0ZS91cGRhdGUpLCBQQVRDSCAodXBkYXRlKSBhbmQgREVMRVRFIHBldHMgaW4gdGhlIHN0b3JlLiBUbyBtYWtlIHRoaW5ncyBlYXNpZXIgd2UndmUgb25seSBjcmVhdGVkIGEgc21hbGwgc3BlY2lmaWNhdGlvbiB3aXRoIGEgc2luZ2xlIHJlc291cmNlICcvcGV0L3twZXRJZH0nIiwiY29udGFjdCI6eyJuYW1lIjoiVElCQ08gQ2xvdWQgSW50ZWdyYXRpb24gVGVhbSIsInVybCI6Imh0dHBzOi8vaW50ZWdyYXRpb24uY2xvdWQudGliY28uY29tL2RvY3MvaW5kZXguaHRtbCIsImVtYWlsIjoidGNpQHRpYmNvLmNvbSJ9fSwic2NoZW1lcyI6WyJodHRwIl0sImNvbnN1bWVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwicHJvZHVjZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJwYXRocyI6eyIvcGV0L3twZXRJZH0iOnsicG9zdCI6eyJzdW1tYXJ5IjoiVXNlIHRoZSBQT1NUIG1ldGhvZCBvZiB0aGlzIEFQSSBzcGVjaWZpY2F0aW9uIHRvIGNyZWF0ZSBhIG5ldyBwZXQiLCJkZXNjcmlwdGlvbiI6IlRoZSBQT1NUIG1ldGhvZCBpbiBhbiBBUEkgU3BlY2lmaWNhdGlvbiBpcyB1c2VkIHRvIGNyZWF0ZSBhIG5ldyByZXNvdXJjZS4gSW4gdGhpcyBjYXNlIGl0IHdvdWxkIGNyZWF0ZSBhIG5ldyBwZXQgd2l0aCB0aGUgcGV0SWQgeW91IHNwZWNpZnkgd2hlbiBjYWxsaW5nIHRoZSBBUEkgYW5kIHRoZSBpbmZvcm1hdGlvbiB5b3UgYWRkIHRvIHRoZSBib2R5IChlLmcuIHRoZSBuYW1lIG9yIHRoZSBzdGF0dXMpLiBXaGVuIHlvdSBjcmVhdGUgYSBbTW9jayBhcHBsaWNhdGlvbl0oaHR0cHM6Ly9pbnRlZ3JhdGlvbi5jbG91ZC50aWJjby5jb20vZG9jcy9tb2NrYXBwL2NyZWF0aW5nTW9ja0FwcC9pbmRleC5odG1sI0FQSU1vZGVsZXIpIGZyb20gdGhpcyBzcGVjaWZpY2F0aW9uIGl0IHdpbGwgYWxzbyBzaG93IHlvdSBhIHNhbXBsZSByZXF1ZXN0IGFuZCBhIHNhbXBsZSByZXNwb25zZS4iLCJvcGVyYXRpb25JZCI6InBvc3RwZXQiLCJjb25zdW1lcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sInByb2R1Y2VzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwicGFyYW1ldGVycyI6W3sibmFtZSI6IlBldCBJbmZvcm1hdGlvbiIsImluIjoiYm9keSIsImRlc2NyaXB0aW9uIjoiVGhlIGluZm9ybWF0aW9uIG9mIHRoZSBwZXQgeW91IHdhbnQgdG8gY3JlYXRlIGluIHRoZSBzdG9yZSIsInNjaGVtYSI6eyIkcmVmIjoiIy9kZWZpbml0aW9ucy9QZXQifSwicmVxdWlyZWQiOnRydWV9LHsibmFtZSI6InBldElkIiwiaW4iOiJwYXRoIiwiZGVzY3JpcHRpb24iOiJUaGUgSUQgb2YgdGhlIHBldCB5b3Ugd2FudCB0byBjcmVhdGUiLCJ0eXBlIjoic3RyaW5nIiwicmVxdWlyZWQiOnRydWV9XSwicmVzcG9uc2VzIjp7IjIwMCI6eyJkZXNjcmlwdGlvbiI6ImEgUGV0IHRvIGJlIHJldHVybmVkIiwic2NoZW1hIjp7IiRyZWYiOiIjL2RlZmluaXRpb25zL1BldCJ9LCJleGFtcGxlcyI6eyJhcHBsaWNhdGlvbi9qc29uIjp7ImNhdGVnb3J5Ijp7ImlkIjoiMSIsIm5hbWUiOiJEb21lc3RpY2F0ZWQgcGV0cyJ9LCJpZCI6IjYiLCJuYW1lIjoiRG9nNiIsInBob3RvVXJscyI6eyJwaG90b1VybCI6Imh0dHA6Ly9zNS5mYXZpbS5jb20vb3JpZy82OS9hZG9yYWJsZS1jdXRlLWRvZy1waG90b2dyYXBoeS1GYXZpbS5jb20tNjU5NzE1LmpwZyJ9LCJzdGF0dXMiOiJBdmFpbGFibGUiLCJ0YWdzIjp7InRhZyI6W3siaWQiOiI2IiwibmFtZSI6IkRvZ3MifV19fX19fX0sImdldCI6eyJzdW1tYXJ5IjoiVXNlIHRoZSBHRVQgbWV0aG9kIG9mIHRoaXMgQVBJIHNwZWNpZmljYXRpb24gdG8gcmV0cmlldmUgKGdldCkgYSBwZXQgZnJvbSB0aGUgc3RvcmUiLCJkZXNjcmlwdGlvbiI6IlRoZSBHRVQgbWV0aG9kIGluIGFuIEFQSSBTcGVjaWZpY2F0aW9uIGlzIHVzZWQgdG8gcmV0cmlldmUgYSByZXNvdXJjZSBmcm9tIHRoZSBBUEkuIEluIHRoaXMgY2FzZSBpdCB3b3VsZCByZXRyaWV2ZSBhIHBldCB3aXRoIHRoZSBwZXRJZCB5b3Ugc3BlY2lmeSB3aGVuIGNhbGxpbmcgdGhlIEFQSS4gV2hlbiB0aGUgcGV0IGlzIGZvdW5kIGl0IHdpbGwgcmV0dXJuIHRoZSBpbmZvcm1hdGlvbiB0byB5b3UuIFdoZW4geW91IGNyZWF0ZSBhIFtNb2NrIGFwcGxpY2F0aW9uXShodHRwczovL2ludGVncmF0aW9uLmNsb3VkLnRpYmNvLmNvbS9kb2NzL21vY2thcHAvY3JlYXRpbmdNb2NrQXBwL2luZGV4Lmh0bWwjQVBJTW9kZWxlcikgZnJvbSB0aGlzIHNwZWNpZmljYXRpb24gaXQgd2lsbCBhbHNvIHNob3cgeW91IGEgc2FtcGxlIHJlc3BvbnNlLiIsIm9wZXJhdGlvbklkIjoiZ2V0cGV0IiwiY29uc3VtZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJwcm9kdWNlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sInBhcmFtZXRlcnMiOlt7Im5hbWUiOiJwZXRJZCIsImluIjoicGF0aCIsImRlc2NyaXB0aW9uIjoiVGhlIElEIG9mIHRoZSBwZXQgeW91IHdhbnQgdG8gcmV0cmlldmUiLCJ0eXBlIjoic3RyaW5nIiwicmVxdWlyZWQiOnRydWV9XSwicmVzcG9uc2VzIjp7IjIwMCI6eyJkZXNjcmlwdGlvbiI6ImEgUGV0IHRvIGJlIHJldHVybmVkIiwic2NoZW1hIjp7IiRyZWYiOiIjL2RlZmluaXRpb25zL1BldCJ9LCJleGFtcGxlcyI6eyJhcHBsaWNhdGlvbi9qc29uIjp7ImNhdGVnb3J5Ijp7ImlkIjoiMSIsIm5hbWUiOiJEb21lc3RpY2F0ZWQgcGV0cyJ9LCJpZCI6IjYiLCJuYW1lIjoiRG9nNiIsInBob3RvVXJscyI6eyJwaG90b1VybCI6Imh0dHA6Ly9zNS5mYXZpbS5jb20vb3JpZy82OS9hZG9yYWJsZS1jdXRlLWRvZy1waG90b2dyYXBoeS1GYXZpbS5jb20tNjU5NzE1LmpwZyJ9LCJzdGF0dXMiOiJBdmFpbGFibGUiLCJ0YWdzIjp7InRhZyI6W3siaWQiOiI2IiwibmFtZSI6IkRvZ3MifV19fX19fX0sInB1dCI6eyJzdW1tYXJ5IjoiVXNlIHRoZSBQVVQgbWV0aG9kIG9mIHRoaXMgQVBJIHNwZWNpZmljYXRpb24gdG8gdXBkYXRlIGEgcGV0IiwiZGVzY3JpcHRpb24iOiJUaGUgUFVUIG1ldGhvZCBpbiBhbiBBUEkgU3BlY2lmaWNhdGlvbiBpcyB1c2VkIHRvIGNyZWF0ZSBhIG5ldyByZXNvdXJjZSBvciB1cGRhdGUgYW4gZXhpc3RpbmcgcmVzb3VyY2UuIEJhc2VkIG9uIHRoZSBJRCB5b3Ugc3BlY2lmeSB3aGVuIGNhbGxpbmcgdGhlIEFQSSBpdCB3b3VsZCBjcmVhdGUgYSBuZXcgcGV0IGluIHRoZSBzdG9yZSBpZiB0aGUgSUQgaXNuJ3QgaW4gdXNlIG9yIHdpbGwgdXBkYXRlIHRoZSBwZXQgdGhhdCBoYXMgdGhlIElEIGlmIHRoZSBJRCBhbHJlYWR5IGV4aXN0cy4gSXQgd291bGQgY3JlYXRlIG9yIHVwZGF0ZSB0aGUgcGV0IHdpdGggdGhlIGluZm9ybWF0aW9uIHlvdSBhZGQgdG8gdGhlIGJvZHkgKGUuZy4gdGhlIG5hbWUgb3IgdGhlIHN0YXR1cykuIFdoZW4geW91IGNyZWF0ZSBhIFtNb2NrIGFwcGxpY2F0aW9uXShodHRwczovL2ludGVncmF0aW9uLmNsb3VkLnRpYmNvLmNvbS9kb2NzL21vY2thcHAvY3JlYXRpbmdNb2NrQXBwL2luZGV4Lmh0bWwjQVBJTW9kZWxlcikgZnJvbSB0aGlzIHNwZWNpZmljYXRpb24gaXQgd2lsbCBhbHNvIHNob3cgeW91IGEgc2FtcGxlIHJlcXVlc3QgYW5kIGEgc2FtcGxlIHJlc3BvbnNlLiIsIm9wZXJhdGlvbklkIjoicHV0cGV0IiwiY29uc3VtZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJwcm9kdWNlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sInBhcmFtZXRlcnMiOlt7Im5hbWUiOiJQZXQgSW5mb3JtYXRpb24iLCJpbiI6ImJvZHkiLCJkZXNjcmlwdGlvbiI6IlRoZSBpbmZvcm1hdGlvbiBvZiB0aGUgcGV0IHlvdSB3YW50IHRvIGNyZWF0ZSBpbiB0aGUgc3RvcmUiLCJzY2hlbWEiOnsiJHJlZiI6IiMvZGVmaW5pdGlvbnMvUGV0In0sInJlcXVpcmVkIjp0cnVlfSx7Im5hbWUiOiJwZXRJZCIsImluIjoicGF0aCIsImRlc2NyaXB0aW9uIjoiVGhlIElEIG9mIHRoZSBwZXQiLCJ0eXBlIjoic3RyaW5nIiwicmVxdWlyZWQiOnRydWV9XSwicmVzcG9uc2VzIjp7IjIwMCI6eyJkZXNjcmlwdGlvbiI6ImEgUGV0IHRvIGJlIHJldHVybmVkIiwic2NoZW1hIjp7IiRyZWYiOiIjL2RlZmluaXRpb25zL1BldCJ9LCJleGFtcGxlcyI6eyJhcHBsaWNhdGlvbi9qc29uIjp7ImNhdGVnb3J5Ijp7ImlkIjoiMSIsIm5hbWUiOiJEb21lc3RpY2F0ZWQgcGV0cyJ9LCJpZCI6IjYiLCJuYW1lIjoiRG9nNiIsInBob3RvVXJscyI6eyJwaG90b1VybCI6Imh0dHA6Ly9zNS5mYXZpbS5jb20vb3JpZy82OS9hZG9yYWJsZS1jdXRlLWRvZy1waG90b2dyYXBoeS1GYXZpbS5jb20tNjU5NzE1LmpwZyJ9LCJzdGF0dXMiOiJBdmFpbGFibGUiLCJ0YWdzIjp7InRhZyI6W3siaWQiOiI2IiwibmFtZSI6IkRvZ3MifV19fX19fX0sInBhdGNoIjp7InN1bW1hcnkiOiJVc2UgdGhlIFBBVENIIG1ldGhvZCBvZiB0aGlzIEFQSSBzcGVjaWZpY2F0aW9uIHRvIHVwZGF0ZSBhIHBldCBpbmZvcm1hdGlvbiIsImRlc2NyaXB0aW9uIjoiVGhlIFBBVENIIG1ldGhvZCBpbiBhbiBBUEkgU3BlY2lmaWNhdGlvbiBpcyB1c2VkIHRvIHVwZGF0ZSBhbiBleGlzdGluZyByZXNvdXJjZS4gQmFzZWQgb24gdGhlIElEIHlvdSBzcGVjaWZ5IHdoZW4gY2FsbGluZyB0aGUgQVBJIGl0IHdpbGwgdXBkYXRlIHRoZSBwZXQgdGhhdCBoYXMgdGhlIElELiBJdCB3b3VsZCB1cGRhdGUgdGhlIHBldCB3aXRoIHRoZSBpbmZvcm1hdGlvbiB5b3UgYWRkIHRvIHRoZSBib2R5IChlLmcuIHRoZSBuYW1lIG9yIHRoZSBzdGF0dXMpLiBXaGVuIHlvdSBjcmVhdGUgYSBbTW9jayBhcHBsaWNhdGlvbl0oaHR0cHM6Ly9pbnRlZ3JhdGlvbi5jbG91ZC50aWJjby5jb20vZG9jcy9tb2NrYXBwL2NyZWF0aW5nTW9ja0FwcC9pbmRleC5odG1sI0FQSU1vZGVsZXIpIGZyb20gdGhpcyBzcGVjaWZpY2F0aW9uIGl0IHdpbGwgYWxzbyBzaG93IHlvdSBhIHNhbXBsZSByZXF1ZXN0IGFuZCBhIHNhbXBsZSByZXNwb25zZS4iLCJvcGVyYXRpb25JZCI6InBhdGNocGV0IiwiY29uc3VtZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJwcm9kdWNlcyI6WyJhcHBsaWNhdGlvbi9qc29uIl0sInBhcmFtZXRlcnMiOlt7Im5hbWUiOiJQZXQgSW5mb3JtYXRpb24iLCJpbiI6ImJvZHkiLCJkZXNjcmlwdGlvbiI6IlRoZSBpbmZvcm1hdGlvbiBvZiB0aGUgcGV0IHlvdSB3YW50IHRvIHVwZGF0ZSBpbiB0aGUgc3RvcmUiLCJzY2hlbWEiOnsiJHJlZiI6IiMvZGVmaW5pdGlvbnMvUGV0In0sInJlcXVpcmVkIjp0cnVlfSx7Im5hbWUiOiJwZXRJZCIsImluIjoicGF0aCIsImRlc2NyaXB0aW9uIjoiVGhlIElEIG9mIHRoZSBwZXQiLCJ0eXBlIjoic3RyaW5nIiwicmVxdWlyZWQiOnRydWV9XSwicmVzcG9uc2VzIjp7IjIwMCI6eyJkZXNjcmlwdGlvbiI6ImEgUGV0IHRvIGJlIHJldHVybmVkIiwic2NoZW1hIjp7IiRyZWYiOiIjL2RlZmluaXRpb25zL1BldCJ9LCJleGFtcGxlcyI6eyJhcHBsaWNhdGlvbi9qc29uIjp7ImNhdGVnb3J5Ijp7ImlkIjoiMSIsIm5hbWUiOiJEb21lc3RpY2F0ZWQgcGV0cyJ9LCJpZCI6IjYiLCJuYW1lIjoiRG9nNiIsInBob3RvVXJscyI6eyJwaG90b1VybCI6Imh0dHA6Ly9zNS5mYXZpbS5jb20vb3JpZy82OS9hZG9yYWJsZS1jdXRlLWRvZy1waG90b2dyYXBoeS1GYXZpbS5jb20tNjU5NzE1LmpwZyJ9LCJzdGF0dXMiOiJBdmFpbGFibGUiLCJ0YWdzIjp7InRhZyI6W3siaWQiOiI2IiwibmFtZSI6IkRvZ3MifV19fX19fX0sImRlbGV0ZSI6eyJzdW1tYXJ5IjoiVXNlIHRoZSBERUxFVEUgbWV0aG9kIG9mIHRoaXMgQVBJIHNwZWNpZmljYXRpb24gdG8gcmVtb3ZlIChERUxFVEUpIGEgcGV0IGZyb20gdGhlIHN0b3JlIiwiZGVzY3JpcHRpb24iOiJUaGUgREVMRVRFIG1ldGhvZCBpbiBhbiBBUEkgU3BlY2lmaWNhdGlvbiBpcyB1c2VkIHRvIHJlbW92ZSBhIHJlc291cmNlIGZyb20gdGhlIEFQSS4gSW4gdGhpcyBjYXNlIGl0IHdvdWxkIHJlbW92ZSB0aGUgcGV0IHdpdGggdGhlIHBldElkIHlvdSBzcGVjaWZ5IHdoZW4gY2FsbGluZyB0aGUgQVBJLiBXaGVuIHlvdSBjcmVhdGUgYSBbTW9jayBhcHBsaWNhdGlvbl0oaHR0cHM6Ly9pbnRlZ3JhdGlvbi5jbG91ZC50aWJjby5jb20vZG9jcy9tb2NrYXBwL2NyZWF0aW5nTW9ja0FwcC9pbmRleC5odG1sI0FQSU1vZGVsZXIpIGZyb20gdGhpcyBzcGVjaWZpY2F0aW9uIGl0IHdpbGwgYWxzbyBzaG93IHlvdSBhIHNhbXBsZSByZXNwb25zZS4iLCJvcGVyYXRpb25JZCI6ImRlbGV0ZXBldCIsImNvbnN1bWVzIjpbImFwcGxpY2F0aW9uL2pzb24iXSwicHJvZHVjZXMiOlsiYXBwbGljYXRpb24vanNvbiJdLCJwYXJhbWV0ZXJzIjpbeyJuYW1lIjoicGV0SWQiLCJpbiI6InBhdGgiLCJkZXNjcmlwdGlvbiI6IlRoZSBJRCBvZiB0aGUgcGV0IHRvIGJlIHJlbW92ZWQiLCJ0eXBlIjoic3RyaW5nIiwicmVxdWlyZWQiOnRydWV9XSwicmVzcG9uc2VzIjp7IjIwMCI6eyJkZXNjcmlwdGlvbiI6ImEgc3RyaW5nIHRvIGJlIHJldHVybmVkIiwic2NoZW1hIjp7InR5cGUiOiJzdHJpbmcifX19fX19LCJkZWZpbml0aW9ucyI6eyJwaG90b1VybHMiOnsidHlwZSI6Im9iamVjdCIsInJlcXVpcmVkIjpbInBob3RvVXJsIl0sInByb3BlcnRpZXMiOnsicGhvdG9VcmwiOnsidHlwZSI6InN0cmluZyJ9fX0sInRhZyI6eyJ0eXBlIjoib2JqZWN0IiwicmVxdWlyZWQiOlsibmFtZSIsImlkIl0sInByb3BlcnRpZXMiOnsibmFtZSI6eyJ0eXBlIjoic3RyaW5nIn0sImlkIjp7InR5cGUiOiJzdHJpbmcifX19LCJjYXRlZ29yeSI6eyJ0eXBlIjoib2JqZWN0IiwicmVxdWlyZWQiOlsibmFtZSIsImlkIl0sInByb3BlcnRpZXMiOnsibmFtZSI6eyJ0eXBlIjoic3RyaW5nIn0sImlkIjp7InR5cGUiOiJzdHJpbmcifX19LCJQZXQiOnsidHlwZSI6Im9iamVjdCIsInJlcXVpcmVkIjpbInBob3RvVXJscyIsIm5hbWUiLCJpZCIsImNhdGVnb3J5Iiwic3RhdHVzIiwidGFncyJdLCJwcm9wZXJ0aWVzIjp7InBob3RvVXJscyI6eyIkcmVmIjoiIy9kZWZpbml0aW9ucy9waG90b1VybHMifSwibmFtZSI6eyJ0eXBlIjoic3RyaW5nIn0sImlkIjp7InR5cGUiOiJzdHJpbmcifSwiY2F0ZWdvcnkiOnsiJHJlZiI6IiMvZGVmaW5pdGlvbnMvY2F0ZWdvcnkifSwic3RhdHVzIjp7InR5cGUiOiJzdHJpbmcifSwidGFncyI6eyIkcmVmIjoiIy9kZWZpbml0aW9ucy90YWdzIn19fSwidGFncyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJ0YWciOnsidHlwZSI6ImFycmF5IiwiaXRlbXMiOnsiJHJlZiI6IiMvZGVmaW5pdGlvbnMvdGFnIn19fX19fQ=="
+                },
+                "swaggerVersion": "v2",
+                "secureConnection": false
+            },
+            "id": "ReceiveHTTPMessage",
+            "handlers": [
+                {
+                    "description": "",
+                    "settings": {
+                        "APISpecPath": "/pet/{petId}",
+                        "Method": "POST",
+                        "reqType": "application/json",
+                        "Path": "/pet/{petId}",
+                        "OutputValidation": false
+                    },
+                    "action": {
+                        "ref": "github.com/project-flogo/flow",
+                        "settings": {
+                            "flowURI": "res://flow:postpet_POST"
+                        },
+                        "input": {
+                            "pathParams": "=$.pathParams",
+                            "body": "=$.body"
+                        },
+                        "output": {
+                            "code": "=$.code",
+                            "responseBody": "=$.responseBody"
+                        }
+                    },
+                    "reply": {
+                        "code": 200,
+                        "configureResponseCodes": true,
+                        "message": ""
+                    },
+                    "schemas": {
+                        "reply": {
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            },
+                            "responseCodesSchema": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"number\"},\"responseType\":{\"type\":\"string\"},\"responseSchema\":{\"type\":\"string\"}}}}",
+                                "fe_metadata": "[{\"code\":200,\"responseType\":\"object\",\"responseSchema\":\"{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrls\\\",\\\"name\\\",\\\"id\\\",\\\"category\\\",\\\"status\\\",\\\"tags\\\"],\\\"properties\\\":{\\\"photoUrls\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrl\\\"],\\\"properties\\\":{\\\"photoUrl\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"},\\\"category\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"status\\\":{\\\"type\\\":\\\"string\\\"},\\\"tags\\\":{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"tag\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}}}}}}}\"}]"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"petId\",\"type\":\"string\"}]"
+                            },
+                            "body": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}"
+                            },
+                            "multipartForm": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{}}",
+                                "fe_metadata": "[]"
+                            }
+                        }
+                    },
+                    "name": "postpet_POST"
+                },
+                {
+                    "description": "",
+                    "settings": {
+                        "APISpecPath": "/pet/{petId}",
+                        "Method": "GET",
+                        "reqType": "application/json",
+                        "Path": "/pet/{petId}",
+                        "OutputValidation": false
+                    },
+                    "action": {
+                        "ref": "github.com/project-flogo/flow",
+                        "settings": {
+                            "flowURI": "res://flow:getpet_GET"
+                        },
+                        "input": {
+                            "pathParams": "=$.pathParams"
+                        },
+                        "output": {
+                            "code": "=$.code",
+                            "responseBody": "=$.responseBody"
+                        }
+                    },
+                    "reply": {
+                        "code": 200,
+                        "configureResponseCodes": true,
+                        "message": ""
+                    },
+                    "schemas": {
+                        "reply": {
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            },
+                            "responseCodesSchema": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"number\"},\"responseType\":{\"type\":\"string\"},\"responseSchema\":{\"type\":\"string\"}}}}",
+                                "fe_metadata": "[{\"code\":200,\"responseType\":\"object\",\"responseSchema\":\"{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrls\\\",\\\"name\\\",\\\"id\\\",\\\"category\\\",\\\"status\\\",\\\"tags\\\"],\\\"properties\\\":{\\\"photoUrls\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrl\\\"],\\\"properties\\\":{\\\"photoUrl\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"},\\\"category\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"status\\\":{\\\"type\\\":\\\"string\\\"},\\\"tags\\\":{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"tag\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}}}}}}}\"}]"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"petId\",\"type\":\"string\"}]"
+                            },
+                            "multipartForm": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{}}",
+                                "fe_metadata": "[]"
+                            }
+                        }
+                    },
+                    "name": "getpet_GET"
+                },
+                {
+                    "description": "",
+                    "settings": {
+                        "APISpecPath": "/pet/{petId}",
+                        "Method": "PUT",
+                        "reqType": "application/json",
+                        "Path": "/pet/{petId}",
+                        "OutputValidation": false
+                    },
+                    "action": {
+                        "ref": "github.com/project-flogo/flow",
+                        "settings": {
+                            "flowURI": "res://flow:putpet_PUT"
+                        },
+                        "input": {
+                            "pathParams": "=$.pathParams",
+                            "body": "=$.body"
+                        },
+                        "output": {
+                            "code": "=$.code",
+                            "responseBody": "=$.responseBody"
+                        }
+                    },
+                    "reply": {
+                        "code": 200,
+                        "configureResponseCodes": true,
+                        "message": ""
+                    },
+                    "schemas": {
+                        "reply": {
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            },
+                            "responseCodesSchema": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"number\"},\"responseType\":{\"type\":\"string\"},\"responseSchema\":{\"type\":\"string\"}}}}",
+                                "fe_metadata": "[{\"code\":200,\"responseType\":\"object\",\"responseSchema\":\"{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrls\\\",\\\"name\\\",\\\"id\\\",\\\"category\\\",\\\"status\\\",\\\"tags\\\"],\\\"properties\\\":{\\\"photoUrls\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrl\\\"],\\\"properties\\\":{\\\"photoUrl\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"},\\\"category\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"status\\\":{\\\"type\\\":\\\"string\\\"},\\\"tags\\\":{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"tag\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}}}}}}}\"}]"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"petId\",\"type\":\"string\"}]"
+                            },
+                            "body": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}"
+                            },
+                            "multipartForm": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{}}",
+                                "fe_metadata": "[]"
+                            }
+                        }
+                    },
+                    "name": "putpet_PUT"
+                },
+                {
+                    "description": "",
+                    "settings": {
+                        "APISpecPath": "/pet/{petId}",
+                        "Method": "PATCH",
+                        "reqType": "application/json",
+                        "Path": "/pet/{petId}",
+                        "OutputValidation": false
+                    },
+                    "action": {
+                        "ref": "github.com/project-flogo/flow",
+                        "settings": {
+                            "flowURI": "res://flow:patchpet_PATCH"
+                        },
+                        "input": {
+                            "pathParams": "=$.pathParams",
+                            "body": "=$.body"
+                        },
+                        "output": {
+                            "code": "=$.code",
+                            "responseBody": "=$.responseBody"
+                        }
+                    },
+                    "reply": {
+                        "code": 200,
+                        "configureResponseCodes": true,
+                        "message": ""
+                    },
+                    "schemas": {
+                        "reply": {
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            },
+                            "responseCodesSchema": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"number\"},\"responseType\":{\"type\":\"string\"},\"responseSchema\":{\"type\":\"string\"}}}}",
+                                "fe_metadata": "[{\"code\":200,\"responseType\":\"object\",\"responseSchema\":\"{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrls\\\",\\\"name\\\",\\\"id\\\",\\\"category\\\",\\\"status\\\",\\\"tags\\\"],\\\"properties\\\":{\\\"photoUrls\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"photoUrl\\\"],\\\"properties\\\":{\\\"photoUrl\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"},\\\"category\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}},\\\"status\\\":{\\\"type\\\":\\\"string\\\"},\\\"tags\\\":{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"tag\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"name\\\",\\\"id\\\"],\\\"properties\\\":{\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"id\\\":{\\\"type\\\":\\\"string\\\"}}}}}}}}\"}]"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"petId\",\"type\":\"string\"}]"
+                            },
+                            "body": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}"
+                            },
+                            "multipartForm": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{}}",
+                                "fe_metadata": "[]"
+                            }
+                        }
+                    },
+                    "name": "patchpet_PATCH"
+                },
+                {
+                    "description": "",
+                    "settings": {
+                        "APISpecPath": "/pet/{petId}",
+                        "Method": "DELETE",
+                        "reqType": "application/json",
+                        "Path": "/pet/{petId}",
+                        "OutputValidation": false
+                    },
+                    "action": {
+                        "ref": "github.com/project-flogo/flow",
+                        "settings": {
+                            "flowURI": "res://flow:deletepet_DELETE"
+                        },
+                        "input": {
+                            "pathParams": "=$.pathParams"
+                        },
+                        "output": {
+                            "code": "=$.code",
+                            "responseBody": "=$.responseBody"
+                        }
+                    },
+                    "reply": {
+                        "code": 200,
+                        "configureResponseCodes": true,
+                        "message": ""
+                    },
+                    "schemas": {
+                        "reply": {
+                            "responseBody": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+                            },
+                            "responseCodesSchema": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"number\"},\"responseType\":{\"type\":\"string\"}}}}",
+                                "fe_metadata": "[{\"code\":200,\"responseType\":\"string\"}]"
+                            }
+                        },
+                        "output": {
+                            "pathParams": {
+                                "type": "json",
+                                "value": "{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[]}",
+                                "fe_metadata": "[{\"parameterName\":\"petId\",\"type\":\"string\"}]"
+                            },
+                            "multipartForm": {
+                                "type": "json",
+                                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{}}",
+                                "fe_metadata": "[]"
+                            }
+                        }
+                    },
+                    "name": "deletepet_DELETE"
+                }
+            ]
+        }
+    ],
+    "resources": [
+        {
+            "id": "flow:postpet_POST",
+            "data": {
+                "name": "MyAwesomeFlogoService_POST",
+                "description": "",
+                "links": [
+                    {
+                        "id": 1,
+                        "from": "ConfigureHTTPResponse",
+                        "to": "Return",
+                        "type": "default"
+                    }
+                ],
+                "tasks": [
+                    {
+                        "id": "ConfigureHTTPResponse",
+                        "name": "ConfigureHTTPResponse",
+                        "description": "Configure HTTP Response Activity",
+                        "activity": {
+                            "ref": "#httpresponse",
+                            "input": {
+                                "trigger": "ReceiveHTTPMessage",
+                                "responsecode": "200",
+                                "input": {
+                                    "mapping": {
+                                        "body": {
+                                            "name": "Dummy",
+                                            "id": "Dummy",
+                                            "category": {
+                                                "name": "Dummy",
+                                                "id": "Dummy"
+                                            },
+                                            "status": "Dummy",
+                                            "tags": {
+                                                "tag": [
+                                                    {
+                                                        "name": "Dummy",
+                                                        "id": "Dummy"
+                                                    }
+                                                ]
+                                            },
+                                            "photoUrls": []
+                                        }
+                                    }
+                                }
+                            },
+                            "schemas": {
+                                "input": {
+                                    "input": {
+                                        "type": "json",
+                                        "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}",
+                                        "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}"
+                                    }
+                                },
+                                "output": {
+                                    "response": {
+                                        "type": "json",
+                                        "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}",
+                                        "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "Return",
+                        "name": "Return",
+                        "description": "Simple Return Activity",
+                        "activity": {
+                            "ref": "#actreturn",
+                            "settings": {
+                                "mappings": {
+                                    "code": "=$activity[ConfigureHTTPResponse].code",
+                                    "responseBody": "=$activity[ConfigureHTTPResponse].response"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "metadata": {
+                    "input": [
+                        {
+                            "name": "pathParams",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"petId\":{\"type\":\"string\"}}"
+                            }
+                        },
+                        {
+                            "name": "body",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}"
+                            }
+                        },
+                        {
+                            "name": "multipartFormData",
+                            "type": "object"
+                        },
+                        {
+                            "name": "requestURI",
+                            "type": "string"
+                        },
+                        {
+                            "name": "method",
+                            "type": "string"
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "code",
+                            "type": "integer"
+                        },
+                        {
+                            "name": "responseBody",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}"
+                            }
+                        }
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"type\":\"object\",\"title\":\"ReceiveHTTPMessage\",\"properties\":{\"pathParams\":{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[\"petId\"]},\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}},\"multipartFormData\":{\"type\":\"object\"},\"requestURI\":{\"type\":\"string\",\"required\":false},\"method\":{\"type\":\"string\",\"required\":false}}}",
+                        "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+                    }
+                },
+                "explicitReply": true
+            }
+        },
+        {
+            "id": "flow:getpet_GET",
+            "data": {
+                "name": "MyAwesomeFlogoService_GET",
+                "description": "",
+                "links": [
+                    {
+                        "id": 1,
+                        "from": "ConfigureHTTPResponse",
+                        "to": "Return",
+                        "type": "default"
+                    }
+                ],
+                "tasks": [
+                    {
+                        "id": "ConfigureHTTPResponse",
+                        "name": "ConfigureHTTPResponse",
+                        "description": "Configure HTTP Response Activity",
+                        "activity": {
+                            "ref": "#httpresponse",
+                            "input": {
+                                "trigger": "ReceiveHTTPMessage",
+                                "responsecode": "200",
+                                "input": {
+                                    "mapping": {
+                                        "body": {
+                                            "photoUrls": [],
+                                            "name": "Dummy",
+                                            "id": "Dummy",
+                                            "category": [],
+                                            "status": "Dummy",
+                                            "tags": {
+                                                "tag": [
+                                                    {
+                                                        "name": "Dummy",
+                                                        "id": "Dummy"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "schemas": {
+                                "input": {
+                                    "input": {
+                                        "type": "json",
+                                        "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}",
+                                        "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}"
+                                    }
+                                },
+                                "output": {
+                                    "response": {
+                                        "type": "json",
+                                        "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}",
+                                        "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}}}}"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "Return",
+                        "name": "Return",
+                        "description": "Simple Return Activity",
+                        "activity": {
+                            "ref": "#actreturn",
+                            "settings": {
+                                "mappings": {
+                                    "code": "=$activity[ConfigureHTTPResponse].code",
+                                    "responseBody": "=$activity[ConfigureHTTPResponse].response"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "metadata": {
+                    "input": [
+                        {
+                            "name": "pathParams",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"petId\":{\"type\":\"string\"}}"
+                            }
+                        },
+                        {
+                            "name": "multipartFormData",
+                            "type": "object"
+                        },
+                        {
+                            "name": "requestURI",
+                            "type": "string"
+                        },
+                        {
+                            "name": "method",
+                            "type": "string"
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "code",
+                            "type": "integer"
+                        },
+                        {
+                            "name": "responseBody",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}"
+                            }
+                        }
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"type\":\"object\",\"title\":\"ReceiveHTTPMessage\",\"properties\":{\"pathParams\":{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[\"petId\"]},\"multipartFormData\":{\"type\":\"object\"},\"requestURI\":{\"type\":\"string\",\"required\":false},\"method\":{\"type\":\"string\",\"required\":false}}}",
+                        "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+                    }
+                },
+                "explicitReply": true
+            }
+        },
+        {
+            "id": "flow:putpet_PUT",
+            "data": {
+                "name": "MyAwesomeFlogoService_PUT",
+                "description": "",
+                "links": [],
+                "tasks": [
+                    {
+                        "id": "Return",
+                        "name": "Return",
+                        "description": "Simple Return Activity",
+                        "activity": {
+                            "ref": "#actreturn",
+                            "settings": {
+                                "mappings": {
+                                    "code": 200,
+                                    "responseBody": {
+                                        "mapping": {
+                                            "body": "=$flow.body"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "metadata": {
+                    "input": [
+                        {
+                            "name": "pathParams",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"petId\":{\"type\":\"string\"}}"
+                            }
+                        },
+                        {
+                            "name": "body",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}"
+                            }
+                        },
+                        {
+                            "name": "multipartFormData",
+                            "type": "object"
+                        },
+                        {
+                            "name": "requestURI",
+                            "type": "string"
+                        },
+                        {
+                            "name": "method",
+                            "type": "string"
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "code",
+                            "type": "integer"
+                        },
+                        {
+                            "name": "responseBody",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}"
+                            }
+                        }
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"type\":\"object\",\"title\":\"ReceiveHTTPMessage\",\"properties\":{\"pathParams\":{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[\"petId\"]},\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}},\"multipartFormData\":{\"type\":\"object\"},\"requestURI\":{\"type\":\"string\",\"required\":false},\"method\":{\"type\":\"string\",\"required\":false}}}",
+                        "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+                    }
+                },
+                "explicitReply": true
+            }
+        },
+        {
+            "id": "flow:patchpet_PATCH",
+            "data": {
+                "name": "MyAwesomeFlogoService_PATCH",
+                "description": "",
+                "links": [],
+                "tasks": [
+                    {
+                        "id": "Return",
+                        "name": "Return",
+                        "description": "Simple Return Activity",
+                        "activity": {
+                            "ref": "#actreturn",
+                            "settings": {
+                                "mappings": {
+                                    "code": 200,
+                                    "responseBody": {
+                                        "mapping": {
+                                            "body": "=$flow.body"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "metadata": {
+                    "input": [
+                        {
+                            "name": "pathParams",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"petId\":{\"type\":\"string\"}}"
+                            }
+                        },
+                        {
+                            "name": "body",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}"
+                            }
+                        },
+                        {
+                            "name": "multipartFormData",
+                            "type": "object"
+                        },
+                        {
+                            "name": "requestURI",
+                            "type": "string"
+                        },
+                        {
+                            "name": "method",
+                            "type": "string"
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "code",
+                            "type": "integer"
+                        },
+                        {
+                            "name": "responseBody",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}"
+                            }
+                        }
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"type\":\"object\",\"title\":\"ReceiveHTTPMessage\",\"properties\":{\"pathParams\":{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[\"petId\"]},\"body\":{\"type\":\"object\",\"required\":[\"photoUrls\",\"name\",\"id\",\"category\",\"status\",\"tags\"],\"properties\":{\"photoUrls\":{\"type\":\"object\",\"required\":[\"photoUrl\"],\"properties\":{\"photoUrl\":{\"type\":\"string\"}}},\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"category\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}},\"status\":{\"type\":\"string\"},\"tags\":{\"type\":\"object\",\"properties\":{\"tag\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"name\",\"id\"],\"properties\":{\"name\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"}}}}}}}},\"multipartFormData\":{\"type\":\"object\"},\"requestURI\":{\"type\":\"string\",\"required\":false},\"method\":{\"type\":\"string\",\"required\":false}}}",
+                        "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+                    }
+                },
+                "explicitReply": true
+            }
+        },
+        {
+            "id": "flow:deletepet_DELETE",
+            "data": {
+                "name": "MyAwesomeFlogoService_DELETE",
+                "description": "",
+                "links": [
+                    {
+                        "id": 1,
+                        "from": "ConfigureHTTPResponse",
+                        "to": "Return",
+                        "type": "default"
+                    }
+                ],
+                "tasks": [
+                    {
+                        "id": "ConfigureHTTPResponse",
+                        "name": "ConfigureHTTPResponse",
+                        "description": "Configure HTTP Response Activity",
+                        "activity": {
+                            "ref": "#httpresponse",
+                            "input": {
+                                "trigger": "ReceiveHTTPMessage",
+                                "responsecode": "200"
+                            },
+                            "schemas": {
+                                "input": {
+                                    "input": {
+                                        "type": "json",
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"string\"}}}",
+                                        "fe_metadata": "{\"body\":\"\"}"
+                                    }
+                                },
+                                "output": {
+                                    "response": {
+                                        "type": "json",
+                                        "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"string\"}}}",
+                                        "fe_metadata": "{\"body\":\"\"}"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "Return",
+                        "name": "Return",
+                        "description": "Simple Return Activity",
+                        "activity": {
+                            "ref": "#actreturn",
+                            "settings": {
+                                "mappings": {
+                                    "code": "=$activity[ConfigureHTTPResponse].code",
+                                    "responseBody": "=$activity[ConfigureHTTPResponse].response"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "metadata": {
+                    "input": [
+                        {
+                            "name": "pathParams",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"petId\":{\"type\":\"string\"}}"
+                            }
+                        },
+                        {
+                            "name": "multipartFormData",
+                            "type": "object"
+                        },
+                        {
+                            "name": "requestURI",
+                            "type": "string"
+                        },
+                        {
+                            "name": "method",
+                            "type": "string"
+                        }
+                    ],
+                    "output": [
+                        {
+                            "name": "code",
+                            "type": "integer"
+                        },
+                        {
+                            "name": "responseBody",
+                            "type": "object",
+                            "schema": {
+                                "type": "json",
+                                "value": "{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}"
+                            }
+                        }
+                    ],
+                    "fe_metadata": {
+                        "input": "{\"type\":\"object\",\"title\":\"ReceiveHTTPMessage\",\"properties\":{\"pathParams\":{\"type\":\"object\",\"properties\":{\"petId\":{\"type\":\"string\"}},\"required\":[\"petId\"]},\"multipartFormData\":{\"type\":\"object\"},\"requestURI\":{\"type\":\"string\",\"required\":false},\"method\":{\"type\":\"string\",\"required\":false}}}",
+                        "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+                    }
+                },
+                "explicitReply": true
+            }
+        }
+    ],
+    "properties": [],
+    "connections": {},
+    "contrib": "W3sicmVmIjoiZ2l0LnRpYmNvLmNvbS9naXQvcHJvZHVjdC9pcGFhcy93aS1jb250cmliLmdpdC9jb250cmlidXRpb25zL0dlbmVyYWwiLCJzM2xvY2F0aW9uIjoiVGliY28vR2VuZXJhbCJ9XQ=="
+}
