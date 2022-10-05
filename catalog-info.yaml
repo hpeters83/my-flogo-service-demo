@@ -11,7 +11,7 @@ metadata:
     - title: TIBCO Cloud Integration
       url: https://eu.integration.cloud.tibco.com/applications
     - title: Open VSCode
-      url: /Users/hpeters/VSCodeFolders/my-flogo-service-demo
+      url: vscode://file/Users/hpeters/VSCodeFolders/my-flogo-service-demo
   annotations:
     github.com/project-slug: hpeters83/my-flogo-service-demo
     backstage.io/techdocs-ref: dir:.
